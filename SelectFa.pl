@@ -17,13 +17,13 @@ while (<FP>)
 close FP ;
 
 my $seq ;
-my $header = ">" ;
+my $header = "" ;
 while (<STDIN>)
 {
   chomp ;
   if (/^>/)
   {
-    if (defined $selectedId{(split /\s/, substr($header, 1))[0]} )
+    if ($header ne "" && defined $selectedId{(split /\s/, substr($header, 1))[0]} )
     {
       print "$header\n$seq\n" ;
     }
