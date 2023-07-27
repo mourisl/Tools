@@ -16,7 +16,7 @@ while (<FP>)
 }
 close FP ;
 
-my $seq ;
+my $seq = "";
 my $header = "" ;
 while (<STDIN>)
 {
@@ -29,7 +29,7 @@ while (<STDIN>)
     }
 
     $header = $_ ;
-    $seq = 0 ;
+    $seq = "" ;
   }
   else
   {
