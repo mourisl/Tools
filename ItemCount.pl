@@ -1,6 +1,7 @@
 #!/usr/bin/env perl
 
-# Count the frequency of the items
+# Count the frequency of the items from stdin
+# Kind of like "xxx | sort | uniq -c" though the first column is item, second column is count
 
 use strict ;
 use warnings ;
