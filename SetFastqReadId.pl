@@ -23,7 +23,7 @@ while (<FP1>)
   my $seq = <FP2> ;
   my $separator = <FP2> ;
   my $qual = <FP2> ;
-  print($header.$seq.$separator.$qual."\n") ;
+  print($header.$seq.$separator.$qual) ;
 }
 
 close FP1 ;
