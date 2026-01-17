@@ -22,13 +22,13 @@ $dedup = $ARGV[1] if (defined $ARGV[1]) ;
 my $seq = "";
 my $header = "" ;
 my %usedId ;
-my $id ;
+my $id = "" ;
 while (<STDIN>)
 {
   chomp ;
   if (/^>/)
   {
-		$id = (split /\s/, substr($header, 1))[0] ;
+		$id = (split /\s/, substr($header, 1))[0] if ($header ne "");
     if ($header ne "" && defined $selectedId{$id} && 
 			($dedup == 0 || !defined $usedId{$id}))
     {
@@ -44,7 +44,7 @@ while (<STDIN>)
     $seq .= $_ ;
   }
 }
-$id = (split /\s/, substr($header, 1))[0] ;
+$id = (split /\s/, substr($header, 1))[0] if ($header ne "") ;
 if ($header ne "" && defined $selectedId{$id} && 
 			($dedup == 0 || !defined $usedId{$id}))
 {
