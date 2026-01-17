@@ -5,7 +5,7 @@
 use strict ;
 use warnings ;
 
-die "Usage: a.pl idlist < input.fa > selected.fa\n" if (@ARGV == 0) ;
+die "Usage: a.pl idlist [dedup(0)]< input.fa > selected.fa\n" if (@ARGV == 0) ;
 
 open FP, $ARGV[0] ;
 my %selectedId ;
@@ -16,16 +16,24 @@ while (<FP>)
 }
 close FP ;
 
+my $dedup = 0 ;
+$dedup = $ARGV[1] if (defined $ARGV[1]) ;
+
 my $seq = "";
 my $header = "" ;
+my %usedId ;
+my $id ;
 while (<STDIN>)
 {
   chomp ;
   if (/^>/)
   {
-    if ($header ne "" && defined $selectedId{(split /\s/, substr($header, 1))[0]} )
+		$id = (split /\s/, substr($header, 1))[0] ;
+    if ($header ne "" && defined $selectedId{$id} && 
+			($dedup == 0 || !defined $usedId{$id}))
     {
       print "$header\n$seq\n" ;
+			$usedId{$id} = 1 ;
     }
 
     $header = $_ ;
@@ -36,7 +44,9 @@ while (<STDIN>)
     $seq .= $_ ;
   }
 }
-if (defined $selectedId{(split /\s/, substr($header, 1))[0]} )
+$id = (split /\s/, substr($header, 1))[0] ;
+if ($header ne "" && defined $selectedId{$id} && 
+			($dedup == 0 || !defined $usedId{$id}))
 {
   print "$header\n$seq\n" ;
 }
